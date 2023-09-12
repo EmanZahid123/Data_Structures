@@ -1,0 +1,145 @@
+# Class for doubly Linked List
+class doublyLinkedList:
+# Initialise the Node
+
+    class Node:
+        def __init__(self, data):
+            self.item = data
+            self.next = None
+            self.prev = None
+
+    class DLLIterator:
+        def __init__(self, lst):
+            self.current = lst.head
+        def __iter__( self):
+            return self
+        def __next__( self ):
+            if self.current != None:
+                val = self.current.item
+                self.current = self.current.next
+                return val
+            else:
+                raise StopIteration
+
+    class DLLRIterator:
+        def __init__(self, lst):
+            self.current = lst.head.next.next
+        def __iter__( self):
+            return self
+        def __next__( self ):
+            if self.current != None:
+                val = self.current.item
+                self.current = self.current.prev
+                return val
+            else:
+                raise StopIteration
+
+    def __init__(self):
+        self.head = None
+
+    def __iter__(self):
+        return self.DLLIterator(self)
+
+    def __reversed__(self):
+        return self.DLLRIterator(self)
+
+    # Insert Element to Empty list
+    def InsertToEmptyList(self, data):
+        if self.head is None:
+            new_node = self.Node(data)
+            self.head = new_node
+        else:
+            print("The list is empty")
+    # Insert element at the end
+    def InsertToEnd(self, data):
+        # Check if the list is empty
+        if self.head is None:
+            new_node = Node(data)
+            self.head = new_node
+            return
+        n = self.head
+        # Iterate till the next reaches NULL
+        while n.next is not None:
+            n = n.next
+        new_node = self.Node(data)
+        n.next = new_node     #next must be written first befor prev
+        new_node.prev = n
+    # Delete the elements from the start
+    def DeleteAtStart(self):
+        if self.head is None:
+            print("The Linked list is empty, no element to delete")
+            return
+        if self.head.next is None:
+            self.head = None
+            return
+        self.head = self.head.next
+        #self.start_prev = None;
+    # Delete the elements from the end
+    def delete_at_end(self):
+        # Check if the List is empty
+        if self.head is None:
+            print("The Linked list is empty, no element to delete")
+            return
+        if self.head.next is None:
+            self.head = None
+            return
+        n = self.head
+        while n.next is not None:
+            n = n.next
+        n.prev.next = None
+    # Traversing and Displaying each element of the list
+    def Display(self):
+        if self.head is None:
+            print("The list is empty")
+            return
+        else:
+            n = self.head
+            while n is not None:
+                print("Element is: ", n.item)
+                n = n.next
+        print("\n")
+
+# Create a new Doubly Linked List
+dll = doublyLinkedList()
+# Insert the element to empty list
+dll.InsertToEmptyList(10)
+# Insert the element at the end
+dll.InsertToEnd(20)
+dll.InsertToEnd(30)
+dll.InsertToEnd(70)
+dll.InsertToEnd(50)
+dll.InsertToEnd(60)
+dll.InsertToEnd(80)
+dll.InsertToEnd(90)
+dll.InsertToEnd(40)
+# Display Data
+dll.Display()
+# Delete elements from start
+dll.DeleteAtStart()
+# Delete elements from end
+dll.DeleteAtStart()
+# Display Data
+dll.Display()
+
+for d in dll:
+    print(d)
+print()
+
+for d in reversed(dll):
+    print(d)
+print()
+
+itm1 = iter(dll)
+itm2 = iter(dll)
+
+print("first through itm1: " + str(next(itm1)))
+print("next  through itm1: " + str(next(itm1)))
+print("first through itm2: " + str(next(itm2)))
+print("next  through itm2: " + str(next(itm2)))
+print("next  through itm2: " + str(next(itm2)))
+print("next  through itm1: " + str(next(itm1)))
+print("next  through itm2: " + str(next(itm2)))
+print("next  through itm2: " + str(next(itm2)))
+print("next  through itm2: " + str(next(itm2)))
+print("next  through itm2: " + str(next(itm2)))
+print("next  through itm1: " + str(next(itm1)))
