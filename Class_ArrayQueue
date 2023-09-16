@@ -1,0 +1,73 @@
+class ArrayQueue:
+    def __init__(self, size):
+        self.Arr_size =size
+        self.queue =[None]*size
+        self.rear=0
+        self.front =0
+    def size(self):
+        return (self.rear - self.front+self.Arr_size)%self.Arr_size
+    def is_full(self):
+        return self.rear-self.front ==self.Arr_size
+    def enqueue(self, val):
+
+        if self.is_full()!=True:
+            self.queue[(self.rear)%self.Arr_size] =val
+            self.rear +=1
+
+        else:
+            raise Exception("Not enough space")
+
+    def remove(self):
+
+        if self.front==self.rear:
+            raise Exception("empty queue")
+        val =self.queue[self.front%self.Arr_size]
+        self.front =self.front+1
+        return val
+
+    def is_empty(self):
+        return self.rear-self.front==0
+    def display(self):
+
+        if self.rear==self.front:
+            raise Exception('Empty List')
+        for i in range(self.front, self.rear):
+            print(self.queue[i%self.Arr_size], end=" ")
+        print()
+
+
+	
+
+def main():
+    a =ArrayQueue(4)
+    a.enqueue(10)
+    print(a.size())
+    a.enqueue(20)
+    print(a.size())
+    print(a.remove())
+    a.enqueue(30)
+    print(a.size())
+    a.enqueue(40)
+    print(a.size())
+    a.enqueue(40)
+    print(a.size())
+    #a.enqueue(30)
+    a.display()
+    print(a.remove())
+    print(a.remove())
+    print(a.remove())
+    print(a.size())
+    print(a.remove())
+    #a.enqueue(20000)
+
+    a.enqueue(12)
+    a.enqueue(98)
+    a.enqueue(87)
+    a.enqueue(87)
+
+    a.display()
+	
+	
+
+
+main()
