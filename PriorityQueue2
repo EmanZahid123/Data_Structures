@@ -1,0 +1,73 @@
+class Queue:
+    def __init__(self):
+        self.pri=[0,1,2,3]      #couldn't understand how self.pri can have a relationship with it's respective queues
+        self.pri3=[]
+        self.pri2=[]
+        self.pri1=[]
+        self.pri0=[]
+    def enqueue(self,val,pri=None):
+        if pri==None:
+            self.pri1.append(val)
+            return
+        for i in range(len(self.pri)):
+            if pri==self.pri[i]:
+                if pri==0:
+                    self.pri0.append(val)
+                    return
+                if pri==1:
+                    self.pri1.append(val)
+                    return
+                if pri==2:
+                    self.pri2.append(val)
+                    return
+                else:
+                    self.pri3.append(val)
+                    return
+        else:
+            raise Exception
+    def dequeue(self):
+        if len(self.pri3)!=0:
+            x=self.pri3[0]
+            del self.pri3[0]
+            return x
+        if len(self.pri2)!=0:
+            x=self.pri2[0]
+            del self.pri2[0]
+            return x
+        if len(self.pri1)!=0:
+            x=self.pri1[0]
+            del self.pri1[0]
+            return x
+        if len(self.pri0)!=0:
+            x=self.pri0[0]
+            del self.pri[0]
+            return x
+        raise Exception
+    def display(self):
+        for i in range(len(self.pri3)):
+            print(self.pri3[i],end=" ")
+        for i in range(len(self.pri2)):
+            print(self.pri2[i],end=" ")
+        for i in range(len(self.pri1)):
+            print(self.pri1[i],end=" ")
+        for i in range(len(self.pri0)):
+            print(self.pri0[i],end=" ")
+        print()
+
+def main():
+    q=Queue()
+    q.enqueue(24)
+    q.enqueue(94,2)
+    q.enqueue(346,3)
+    q.enqueue(457,0)
+    q.display()
+    print(q.dequeue())
+    q.display()
+    q.enqueue(5646,3)
+    q.enqueue(567,3)
+    q.display()
+    print(q.dequeue())
+    q.display()
+main()
+
+
