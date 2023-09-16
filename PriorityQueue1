@@ -1,0 +1,45 @@
+class Queue():               #there is no actual shifting rather there is shortening of array size but it's working
+    def __init__(self):
+        self.task=[]
+        self.pri=[]
+
+    def enqueue(self,val,pri):
+        self.task.append(val)
+        self.pri.append(pri)
+
+    def dequeue(self):
+        pri_index=self.get_pri_index()
+        x=self.task[pri_index]
+        del self.task[pri_index]
+        del self.pri[pri_index]
+
+        return x
+    def display(self):
+        for i in range(len(self.pri)):
+            print("(",self.task[i],",",self.pri[i],")",end=" ")
+        print()
+    def get_pri_index(self):
+        hipri=0
+        for i in range(len(self.pri)):
+            if self.pri[i]>hipri:
+                hipri=self.pri[i]
+                index=i
+        return index
+
+def main():
+    task=Queue()
+    task.enqueue(56,3)
+    task.enqueue(89,1)
+    task.enqueue(347,3)
+    task.enqueue(23,2)
+    task.display()
+    print("removed",task.dequeue())
+    task.display()
+    print("removed",task.dequeue())
+    task.display()
+    task.enqueue(47,3)
+    task.enqueue(3,1)
+    task.display()
+    print("removed",task.dequeue())
+    task.display()
+main()
