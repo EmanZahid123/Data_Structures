@@ -1,0 +1,53 @@
+# Write your code here :-)
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LinkedQueue:
+    def __init__(self):
+        self.front = None
+        self.rear = None
+        self.size = 0
+
+    def is_empty(self):
+        return self.front == None
+
+    def enqueue(self, data):
+        new_node = Node(data)
+        if self.rear == None:
+            self.front = self.rear = new_node
+            return
+        self.rear.next = new_node
+        self.rear = new_node
+        self.size += 1
+
+    def dequeue(self):
+        if self.is_empty():
+            return None
+        temp = self.front
+        self.front = temp.next
+        if self.front == None:
+            self.rear = None
+        self.size -= 1
+        return temp.data
+
+    def _len_(self):
+        return self.size
+    def printq(self):
+        if self.front==None:
+            print("empty")
+            return
+        curr=self.front
+        while curr!=None:
+            print(curr.data,end=" ")
+            curr=curr.next
+        print()
+q=LinkedQueue()
+q.enqueue(98)
+q.enqueue(45)
+q.enqueue(7)
+q.enqueue(9)
+q.printq()
+q.dequeue()
+q.printq()
