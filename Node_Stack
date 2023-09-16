@@ -1,0 +1,61 @@
+class Node_Stack():
+    def __init__(self,data,link=None):
+        self.data=data
+        self.link=link
+def push(lnkNodes,val):
+    tmp = Node_Stack(val)
+    cn = lnkNodes
+    while cn.link != None:
+        cn = cn.link
+    cn.link = tmp
+def pop(lnkNodes):
+    #count=count_node(lnkNodes)
+    cn=lnkNodes
+    #if lnkNodes==None:
+        #return None
+    if cn.link==None:
+        lnkNodes=None
+        return lnkNodes
+    while (cn.link.link):
+
+        cn=cn.link
+    cn.link=None
+    return lnkNodes
+
+def printLinkedNodes(lnkNodes):
+    cn = lnkNodes
+    while cn != None:
+        print(cn.data, end=" ")
+        cn = cn.link
+def count_node(lnknodes):
+    cn=lnknodes
+    count=1
+    while cn.link!=None:
+        count+=1
+        cn=cn.link
+    return count
+
+
+
+
+
+def main():
+    n=Node_Stack(123)
+    push(n,3)
+    push(n,6)
+    push(n,9)
+    printLinkedNodes(n)
+    print()
+    pop(n)
+    printLinkedNodes(n)
+    print()
+    pop(n)
+    printLinkedNodes(n)
+
+
+
+
+main()
+
+
+
