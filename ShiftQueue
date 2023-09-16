@@ -1,0 +1,37 @@
+class Queue:
+    def __init__(self):
+        self.data=None
+        self.rear=0
+        self.queue=[]
+    def enqueue(self,val):
+        self.queue.append(val)
+        self.rear+=1
+    def dequeue(self):
+        x=self.queue[0]
+        for i in range(self.rear-1):
+            self.queue[i]=self.queue[i+1]
+        self.queue.pop()
+        self.rear=self.rear-1
+        #print(self.queue)
+        return x
+    def display(self):
+        for i in range(self.rear):
+            print(self.queue[i],end=" ")
+        print()
+def main():
+    q=Queue()
+    q.enqueue(34)
+    q.enqueue(4)
+    q.enqueue(89)
+
+    q.enqueue(5)
+    q.display()
+    print(q.dequeue())
+    q.display()
+    q.enqueue(2446)
+    q.enqueue(24)
+    q.display()
+    print(q.dequeue())
+    q.display()
+main()
+
