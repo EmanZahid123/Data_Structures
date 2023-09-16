@@ -1,0 +1,44 @@
+class Node:
+        def __init__(self,el):
+            self.data=el
+            self.link=None
+class Queue:
+    def __init__(self):
+        self.__front=None
+        self.__rear=None
+        self.__size=0
+
+    def insert(self,o):
+        tmp=Node(o)
+        if self.__rear==None:
+            self.__rear=tmp
+            self.__rear=self.__front=tmp
+        else:
+            self.__rear.link=Node(o)
+            self.__rear=self.__rear.link
+    def remove(self):
+        if self.__front==None:
+            return" Nothing to remove"
+        else:
+            r=self.__front.data
+            self.__front=self.__front.link
+            return r
+    def printLinkedNodes(self):
+        cn=self.__front
+        while cn!=self.__rear.link:
+            print(cn.data,end=" ")
+            cn=cn.link
+        print()
+
+
+
+def main():
+    q=Queue()
+    q.insert(23)
+    q.insert(3)
+    q.insert(78)
+    q.printLinkedNodes()
+    q.remove()
+    q.printLinkedNodes()
+main()
+
