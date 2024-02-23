@@ -1,0 +1,213 @@
+# linked nodes based code for implementation of TREE basics
+class Tree:
+    class Node:
+        def __init__(self, data=None):
+            self.data = data
+            self.children = []
+
+    def __init__(self):
+        self.root = None
+        self.size=0
+        self.leaves=0
+
+    class PreIterator:
+        def __init__(self, node, tree):
+            self.stk = [node]
+
+        def __next__(self):
+            if len(self.stk) > 0:
+                cur = self.stk[-1]
+                del self.stk[-1]
+                for c in reversed(cur.children):
+                    self.stk.append(c)
+                return cur.data
+            else:
+                raise StopIteration
+
+    class ProIterator:
+        def __init__(self, node, tree):
+            self.que = [node]
+
+        def __next__(self):
+            if len(self.que) > 0:
+                cur = self.que[0]
+                del self.que[0]
+                for c in cur.children:
+                    self.que.append(c)
+                return cur.data
+            else:
+                raise StopIteration
+
+    def __iter__(self):
+        return self.PreIterator(self.root, self)
+
+    def addnode(self, n, p=None):
+        if p == None and self.root == None:
+            self.root = self.Node(n)
+            self.size+=1
+        elif p == None:
+            raise Exception("Root aleady exist")
+        if self.root==None and p!=None:    #for first node if p is not none
+            raise Exception("Parent does not exist")
+        elif n != None and p != None:
+            if self.root.data == p:
+                self.root.children.append(self.Node(n))
+                self.size+=1
+            else:
+                self.addnodeAux(self.root, n, p)
+
+    def addnodeAux(self, r, n, p):
+        for c in r.children:
+            if c.data == p:
+                c.children.append(self.Node(n))
+                self.size+=1
+                return
+            self.addnodeAux(c, n, p)
+
+    def size_node(self):
+        return self.sizeof(self.root)
+    def sizeof(self,r):
+        if r != None:
+            size=1
+            for c in r.children:
+                size+=self.sizeof(c)
+            return size
+    def leave(self):
+        return self.leaveaux(self.root)
+    def leaveaux(self,r):
+        if len(r.children)==0:
+            return 1
+        else:
+            leaves=0
+        for c in r.children:
+            leaves+=self.leaveaux(c)
+        return leaves
+
+    def update(self,o,n):
+        self.updateaux(self.root,o,n)
+    def updateaux(self,r,o,n):
+        if r.data==o:
+            r.data=n
+            return
+        for c in r.children:
+            self.updateaux(c,o,n)
+
+    def level_wise(self):
+
+        return self.ProIterator(self.root, self)
+
+    def depth(self,n):
+        return self.depthaux(self.root,n)
+    def depthaux(self,r,n):
+        if r is None:
+            return 0
+        if r.data==n:
+            return 1
+        for c in r.children:
+            depth=self.depthaux(c,n)
+            if depth!=0:
+                return depth+1
+        return 0
+
+    def cut_paste(self, o, n):
+        if o == self.root:
+            self.root = n
+            return
+        parent = self.cut_aux(self.root, o)
+        if not parent:
+            return
+        parent.children.remove(o)
+        n.children.append(o)
+        self.cut_paste_subtree(o, n)
+    def cut_aux(self,r,child):
+        if child in r.children:
+            return node
+
+        for c in r.children:
+            parent=self.cut_aux(c,child)
+            if parent:
+                return parent
+        return None
+
+    def cut_paste_subtree(self, o, n):
+        for child in o.children:
+            n_child = Node(child.value) # Create a new node with the same value
+            n.children.append(n_child)
+            self.cut_paste_subtree(child, n_child)
+
+    def remove(self, v):
+        self.remove_aux(None, self.root, v)
+
+    def remove_aux(self, parent, node, v):
+        if node == None:
+            return
+        if node.data == v:
+            if parent != None:
+                parent.children.remove(node)
+            else:
+                self.root = None
+            return
+        for c in node.children:
+            self.remove_aux(node, c, v)
+
+
+    def Display(self):
+        self.DisplayAux(self.root)
+        print()
+
+
+    def DisplayAux(self, r):
+        if r != None:
+            print(r.data)
+            for c in r.children:
+                self.DisplayAux(c)
+
+
+def main():
+    # Create a new tree
+    t = Tree()
+    # add the root element to the tree
+    t.addnode(10)
+    # add the element as child node to an existing node of tree
+    t.addnode(30,10)
+    t.addnode(200, 10)
+    t.addnode(70, 10)
+    t.addnode(2, 30)
+    t.addnode(50, 30)
+    t.addnode(92, 200)
+    t.addnode(60, 200)
+    t.addnode(12, 70)
+    t.addnode(2000, 60)
+    t.addnode(7000, 60)
+    t.addnode(55, 60)
+    t.addnode(99, 400000)
+    t.addnode(99, 30)
+
+    # Display tree data
+    print("Display tree data")
+    t.Display()
+
+    print()
+
+    print("OUTPUT of 'for d in t:'")
+    for d in t:
+        print(d)
+    print()
+    print("Level wise printing")
+    t.level_wise()
+    print("size=",t.size_node())
+    print("leaves=",t.leave())
+    t.update(10,44)
+    t.Display()
+    #print("Level wise printing")
+    #t.level_wise()
+    print("Depth is:",t.depth(2))
+    print()
+    t.cut_paste(30,12)
+    t.Display()
+    t.remove(30)
+    t.Display()
+
+
+
+main()
